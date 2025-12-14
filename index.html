@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Winter Escape – Abschluss</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg">
+  <div class="snow" id="snow"></div>
+  <div class="bgGlow"></div>
+
+  <main class="wrap center">
+    <section class="card hero">
+      <div class="badge">❄️ WINTER ESCAPE</div>
+      <h1>Abschluss-Escape für die letzte Schulwoche</h1>
+      <p class="lead">
+        <strong>Teams am Handy</strong> lösen Aufgaben (A–D) pro Kapitel und geben ihre Ergebnisse an die Spielleitung.
+        <strong>Spielleitung am Smartboard</strong> berechnet den Kapitel-Code sichtbar.
+      </p>
+
+      <div class="grid2">
+        <a class="btn primary big" href="team.html">📱 Team-Ansicht (Handys)</a>
+        <a class="btn big" href="board.html">🖥️ Spielleitung (Smartboard)</a>
+      </div>
+
+      <div class="note">
+        <strong>Spielablauf:</strong>
+        1) Gruppen lösen A–D • 2) Zahlen an Spielleitung • 3) Code am Board berechnen • 4) Code am Handy eingeben • 5) Weiter.
+      </div>
+    </section>
+
+    <footer class="footer">Offline-freundlich • 12 Kapitel inkl. Finale • Reset möglich</footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    (function(){
+      const snow=document.getElementById("snow");
+      for(let i=0;i<28;i++){
+        const f=document.createElement("div");
+        f.className="flake";
+        f.style.left=(Math.random()*100)+"vw";
+        f.style.animationDuration=(7+Math.random()*10)+"s";
+        f.style.animationDelay=(-Math.random()*10)+"s";
+        f.style.opacity=(0.18+Math.random()*0.6);
+        const s=4+Math.random()*8;
+        f.style.width=f.style.height=s+"px";
+        snow.appendChild(f);
+      }
+    })();
+  </script>
+</body>
+</html>

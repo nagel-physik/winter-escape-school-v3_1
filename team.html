@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Teams – Winter Escape</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg">
+  <div class="snow" id="snow"></div>
+  <div class="bgGlow"></div>
+
+  <header class="topbar">
+    <div class="wrap topbarInner">
+      <div class="brand">
+        <div class="logo">📱</div>
+        <div>
+          <div class="title">Team-Ansicht</div>
+          <div class="subtitle">Dropdown-Gruppen • Code eingeben • weiter</div>
+        </div>
+      </div>
+      <a class="btn tiny" href="index.html">⬅️ Start</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1 style="margin:0 0 10px">🚀 Eure Mission</h1>
+      <p class="muted">
+        Öffnet die Gruppenaufgaben (Dropdown). Jede Gruppe liefert <strong>eine Zahl</strong> (A–D) an die Spielleitung.
+        Die Spielleitung berechnet den Freigabecode am Smartboard. Danach gebt ihr den Code unten ein.
+      </p>
+    </section>
+
+    <section class="card small" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <h2 id="chapterH">Kapitel …</h2>
+          <div class="muted" id="chapterSub"></div>
+        </div>
+        <div class="chip" id="progressChip">Kapitel: …</div>
+      </div>
+    </section>
+
+    <section class="card small" style="margin-top:14px">
+      <h2>👥 Gruppenaufgaben</h2>
+      <div class="smallHint">Damit nicht alles sofort sichtbar ist: erst antippen, dann lesen. 😉</div>
+
+      <div class="row" style="margin-top:10px">
+        <details><summary><span class="groupTag gA">Gruppe A</span><span class="muted">Tippen</span></summary><div class="smallHint" id="tA"></div></details>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <details><summary><span class="groupTag gB">Gruppe B</span><span class="muted">Tippen</span></summary><div class="smallHint" id="tB"></div></details>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <details><summary><span class="groupTag gC">Gruppe C</span><span class="muted">Tippen</span></summary><div class="smallHint" id="tC"></div></details>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <details><summary><span class="groupTag gD">Gruppe D</span><span class="muted">Tippen</span></summary><div class="smallHint" id="tD"></div></details>
+      </div>
+    </section>
+
+    <section class="card small" style="margin-top:14px">
+      <h2>🔐 Freigabecode</h2>
+      <p class="muted">Gebt den Code ein, den euch die Spielleitung nennt.</p>
+      <div class="row">
+        <input id="codeIn" placeholder="Code / Wort" inputmode="text" style="max-width:230px">
+        <button class="btn primary" id="btnCheck">✅ Prüfen</button>
+        <button class="btn" id="btnNext" style="display:none">➡️ Weiter</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <span class="chip" id="msg" style="display:none"></span>
+      </div>
+      <div class="smallHint" style="margin-top:10px">
+        Hinweis: Ohne Server kann das Handy den Board‑Code nicht „prüfen“. Die Spielleitung entscheidet. Wenn ihr den Code korrekt bekommen habt, geht’s weiter.
+      </div>
+    </section>
+
+    <section class="card small" style="margin-top:14px">
+      <h2>♻️ Reset</h2>
+      <p class="muted">Nur dieses Handy zurücksetzen (für Tests).</p>
+      <div class="row">
+        <button class="btn tiny danger" id="resetPhone">Reset (Handy)</button>
+      </div>
+    </section>
+
+    <footer class="footer">12 Kapitel inkl. Finale • für 90 Minuten ausgelegt</footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    (function(){
+      const snow=document.getElementById("snow");
+      for(let i=0;i<22;i++){
+        const f=document.createElement("div");
+        f.className="flake";
+        f.style.left=(Math.random()*100)+"vw";
+        f.style.animationDuration=(7+Math.random()*10)+"s";
+        f.style.animationDelay=(-Math.random()*10)+"s";
+        f.style.opacity=(0.18+Math.random()*0.6);
+        const s=4+Math.random()*8;
+        f.style.width=f.style.height=s+"px";
+        snow.appendChild(f);
+      }
+    })();
+
+    let current = ESC.loadTeam();
+    const chapterH=document.getElementById("chapterH");
+    const chapterSub=document.getElementById("chapterSub");
+    const progressChip=document.getElementById("progressChip");
+
+    const tA=document.getElementById("tA");
+    const tB=document.getElementById("tB");
+    const tC=document.getElementById("tC");
+    const tD=document.getElementById("tD");
+
+    const codeIn=document.getElementById("codeIn");
+    const btnCheck=document.getElementById("btnCheck");
+    const btnNext=document.getElementById("btnNext");
+    const msg=document.getElementById("msg");
+
+    function show(ok, text){
+      msg.style.display="inline-flex";
+      msg.textContent=text;
+      msg.style.border = ok ? "1px solid rgba(90,255,180,.5)" : "1px solid rgba(255,80,180,.5)";
+      msg.style.background = ok ? "rgba(90,255,180,.12)" : "rgba(255,80,180,.10)";
+    }
+
+    function closeAllDetails(){
+      document.querySelectorAll("details").forEach(d=>d.open=false);
+    }
+
+    function render(){
+      const info = ESC.CHAPTERS[current];
+      progressChip.textContent = "Kapitel: " + current;
+
+      closeAllDetails();
+      btnNext.style.display="none";
+      msg.style.display="none";
+      codeIn.value="";
+
+      if(!info){
+        chapterH.textContent = "Kapitel fehlt";
+        chapterSub.textContent = "Sag der Spielleitung Bescheid.";
+        tA.textContent=tB.textContent=tC.textContent=tD.textContent="—";
+        return;
+      }
+
+      chapterH.textContent = info.title || ("Kapitel "+current);
+
+      if(info.codeType==="word"){
+        chapterSub.textContent = "Finale: Der Code ist ein Wort.";
+        tA.innerHTML = "Finale‑Hinweis: Es ist ein kurzer Weihnachts‑Code (Englisch, 4 Buchstaben).";
+        tB.innerHTML = "Wenn ihr es habt: sauber eintippen (ohne Leerzeichen).";
+        tC.innerHTML = "Wenn ihr unsicher seid: fragt nach einem Mini‑Tipp.";
+        tD.innerHTML = "Bleibt fair: nicht wild raten – ihr seid fast am Ziel.";
+        return;
+      }
+
+      chapterSub.textContent = "Gebt A–D an die Spielleitung. Dort wird der Code berechnet.";
+      tA.innerHTML = info.groups?.A || "—";
+      tB.innerHTML = info.groups?.B || "—";
+      tC.innerHTML = info.groups?.C || "—";
+      tD.innerHTML = info.groups?.D || "—";
+    }
+
+    btnCheck.addEventListener("click", ()=>{
+      const info = ESC.CHAPTERS[current];
+      if(!info){ show(false,"❌ Kapitel fehlt."); return; }
+
+      const entered = (codeIn.value||"").trim();
+      if(info.codeType==="word"){
+        const ok = entered.toUpperCase() === String(info.code||"XMAS").toUpperCase();
+        if(ok){
+          show(true,"🎁 Richtig! Finale gelöst!");
+          ESC.fxConfetti(2600);
+          btnNext.style.display="none";
+        } else {
+          show(false,"❌ Falsch. Hinweis beachten.");
+          ESC.fxConfetti(800);
+        }
+        return;
+      }
+
+      if(!/^[0-9]{1,5}$/.test(entered)){
+        show(false,"❌ Bitte nur Ziffern (1–5 Stellen).");
+        ESC.fxConfetti(700);
+        return;
+      }
+      show(true,"✅ Code akzeptiert! Weiter…");
+      ESC.fxConfetti(2200);
+      btnNext.style.display="inline-flex";
+    });
+
+    btnNext.addEventListener("click", ()=>{
+      const info = ESC.CHAPTERS[current];
+      if(!info) return;
+      if(info.next && ESC.CHAPTERS[info.next]){
+        current = info.next;
+        ESC.saveTeam(current);
+        render();
+      } else {
+        render();
+      }
+    });
+
+    document.getElementById("resetPhone").addEventListener("click", ()=>{
+      if(confirm("Dieses Handy wirklich zurücksetzen?")){
+        localStorage.removeItem(ESC.KEY_TEAM);
+        current = 1;
+        ESC.saveTeam(current);
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

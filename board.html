@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Spielleitung – Winter Escape</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg">
+  <div class="snow" id="snow"></div>
+  <div class="bgGlow"></div>
+
+  <header class="topbar">
+    <div class="wrap topbarInner">
+      <div class="brand">
+        <div class="logo">🖥️</div>
+        <div>
+          <div class="title">Spielleitung</div>
+          <div class="subtitle">Kapitel wählen • Zahlen eintragen • Code berechnen</div>
+        </div>
+      </div>
+      <a class="btn tiny" href="index.html">⬅️ Start</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1 style="margin:0 0 10px">🎮 Control Center</h1>
+      <p class="muted">
+        Teams geben euch 4 Zahlen (A–D). Ihr tragt sie ein, klickt <strong>Berechnen</strong> und nennt den Code.
+        <br><span class="kbd">Hinweis:</span> Ohne Server kann das Smartboard den Code nicht automatisch auf fremde Handys „pushen“. Teams tippen den Code selbst ein.
+      </p>
+    </section>
+
+    <section class="card small" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between; align-items:flex-end">
+        <div style="flex:1; min-width:260px">
+          <h2>📌 Kapitel</h2>
+          <div class="row">
+            <select id="chapterSel" style="min-width:320px"></select>
+            <span class="chip" id="chipType">…</span>
+          </div>
+          <div class="smallHint" id="chapterTitle"></div>
+        </div>
+
+        <div style="text-align:right">
+          <div class="chip">Reset möglich</div>
+          <div class="row" style="justify-content:flex-end; margin-top:8px">
+            <button class="btn tiny danger" id="resetAll">♻️ Reset (Board)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card small" style="margin-top:14px" id="calcCard">
+      <h2>🧮 Eingaben (A–D)</h2>
+      <div class="row">
+        <input id="inA" type="number" placeholder="A" style="width:120px">
+        <input id="inB" type="number" placeholder="B" style="width:120px">
+        <input id="inC" type="number" placeholder="C" style="width:120px">
+        <input id="inD" type="number" placeholder="D" style="width:120px">
+        <button class="btn primary" id="btnCalc">🎆 Berechnen</button>
+      </div>
+
+      <div class="rulebox" style="margin-top:12px">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div class="muted">Rechenregel:</div>
+            <div style="font-weight:1000" id="formulaName">…</div>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">Code:</div>
+            <div class="bigCode bigPulse" id="outCode">—</div>
+          </div>
+        </div>
+        <div class="smallHint" id="hintBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn tiny" id="btnNext">➡️ Kapitel weiter</button>
+      </div>
+    </section>
+
+    <section class="card small" style="margin-top:14px" id="wordCard" hidden>
+      <h2>🎁 Finale (Kapitel 12)</h2>
+      <p class="muted">Der finale Code ist ein Wort. Teams geben es ein.</p>
+      <div class="rulebox" style="margin-top:12px">
+        <div class="row" style="justify-content:space-between">
+          <div class="muted">Finales Wort:</div>
+          <div class="bigCode bigPulse" id="finalWord">XMAS</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">Spielleitung • sichtbare Berechnung • großer Konfetti‑Effekt</footer>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    (function(){
+      const snow=document.getElementById("snow");
+      for(let i=0;i<22;i++){
+        const f=document.createElement("div");
+        f.className="flake";
+        f.style.left=(Math.random()*100)+"vw";
+        f.style.animationDuration=(7+Math.random()*10)+"s";
+        f.style.animationDelay=(-Math.random()*10)+"s";
+        f.style.opacity=(0.18+Math.random()*0.6);
+        const s=4+Math.random()*8;
+        f.style.width=f.style.height=s+"px";
+        snow.appendChild(f);
+      }
+    })();
+
+    const st = ESC.loadBoard();
+    const sel = document.getElementById("chapterSel");
+    const chipType = document.getElementById("chipType");
+    const titleEl = document.getElementById("chapterTitle");
+    const formulaName = document.getElementById("formulaName");
+    const hintBox = document.getElementById("hintBox");
+    const outCode = document.getElementById("outCode");
+
+    const calcCard=document.getElementById("calcCard");
+    const wordCard=document.getElementById("wordCard");
+    const finalWord=document.getElementById("finalWord");
+
+    const ids = Object.keys(ESC.CHAPTERS).map(n=>parseInt(n,10)).sort((a,b)=>a-b);
+    for(const id of ids){
+      const opt=document.createElement("option");
+      opt.value=String(id);
+      opt.textContent = id + " – " + ESC.CHAPTERS[id].title;
+      sel.appendChild(opt);
+    }
+    sel.value = String(st.chapter || 1);
+
+    function chapterHint(ch){
+      if(ch===4) return "Toleranz: A 12–20, B 20–23, C 8–10, D ist 1/2/3.";
+      return "";
+    }
+
+    function render(){
+      const ch = parseInt(sel.value,10);
+      const info = ESC.CHAPTERS[ch];
+      titleEl.textContent = info.title || ("Kapitel "+ch);
+      chipType.textContent = info.codeType==="word" ? "WORT‑CODE" : "BERECHNUNG";
+      hintBox.textContent = chapterHint(ch);
+      formulaName.textContent = info.formulaName || "—";
+
+      if(info.codeType==="word"){
+        calcCard.hidden=true;
+        wordCard.hidden=false;
+        finalWord.textContent = info.code || "XMAS";
+        outCode.textContent = "—";
+      } else {
+        calcCard.hidden=false;
+        wordCard.hidden=true;
+      }
+      ESC.saveBoard({chapter: ch, lastCode: (ESC.loadBoard().lastCode||"")});
+    }
+
+    function getInputs(){
+      return [Number(document.getElementById("inA").value), Number(document.getElementById("inB").value),
+              Number(document.getElementById("inC").value), Number(document.getElementById("inD").value)];
+    }
+
+    document.getElementById("btnCalc").addEventListener("click", ()=>{
+      const ch = parseInt(sel.value,10);
+      const info = ESC.CHAPTERS[ch];
+      if(!info || info.codeType==="word") return;
+
+      let vals = getInputs();
+      if(info.normalize) vals = info.normalize(vals);
+      const [A,B,C,D] = vals;
+
+      const code = info.compute(A,B,C,D);
+      outCode.textContent = String(code);
+      ESC.saveBoard({chapter: ch, lastCode: String(code)});
+      ESC.fxConfetti(2400);
+    });
+
+    document.getElementById("btnNext").addEventListener("click", ()=>{
+      const ch = parseInt(sel.value,10);
+      const info = ESC.CHAPTERS[ch];
+      if(info && info.next && ESC.CHAPTERS[info.next]){
+        sel.value = String(info.next);
+        render();
+      } else {
+        sel.value="12"; render();
+      }
+    });
+
+    document.getElementById("resetAll").addEventListener("click", ()=>{
+      if(confirm("Board-Reset? (Kapitel zurück auf 1)")){
+        localStorage.removeItem(ESC.KEY_BOARD);
+        location.reload();
+      }
+    });
+
+    sel.addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
