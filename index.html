@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Winter Escape – Abschluss</title>
+  <title>Winter Escape (School) – v4</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="bg">
@@ -12,32 +12,28 @@
 
   <main class="wrap center">
     <section class="card hero">
-      <div class="badge">❄️ WINTER ESCAPE</div>
-      <h1>Abschluss-Escape für die letzte Schulwoche</h1>
+      <div class="badge">❄️ WINTER ESCAPE v4</div>
+      <h1>90-Minuten Abschluss-Escape</h1>
       <p class="lead">
-        <strong>Teams am Handy</strong> lösen Aufgaben (A–D) pro Kapitel und geben ihre Ergebnisse an die Spielleitung.
-        <strong>Spielleitung am Smartboard</strong> berechnet den Kapitel-Code sichtbar.
+        <b>Teams am Handy</b> lösen Aufgaben. <b>Spielleitung am Board</b> rechnet Code sichtbar.
+        <br>Neu: <b>Token-Sperre</b> – ohne Freigabe-Token geht’s nicht weiter.
       </p>
-
       <div class="grid2">
-        <a class="btn primary big" href="team.html">📱 Team-Ansicht (Handys)</a>
-        <a class="btn big" href="board.html">🖥️ Spielleitung (Smartboard)</a>
+        <a class="btn primary big" href="team.html">📱 Team (Handy)</a>
+        <a class="btn big" href="board.html">🖥️ Spielleitung (Board)</a>
       </div>
-
       <div class="note">
-        <strong>Spielablauf:</strong>
-        1) Gruppen lösen A–D • 2) Zahlen an Spielleitung • 3) Code am Board berechnen • 4) Code am Handy eingeben • 5) Weiter.
+        <b>Flow:</b> Teams lösen A–D → Spielleitung tippt Zahlen ein → <b>Code + Token</b> erscheinen → Teams geben Token ein → nächstes Kapitel.
       </div>
     </section>
-
-    <footer class="footer">Offline-freundlich • 12 Kapitel inkl. Finale • Reset möglich</footer>
+    <footer class="footer">v4 • 16 Kapitel • Token-Sperre</footer>
   </main>
 
   <script src="app.js"></script>
   <script>
     (function(){
       const snow=document.getElementById("snow");
-      for(let i=0;i<28;i++){
+      for(let i=0;i<24;i++){
         const f=document.createElement("div");
         f.className="flake";
         f.style.left=(Math.random()*100)+"vw";

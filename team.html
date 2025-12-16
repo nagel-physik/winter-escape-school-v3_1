@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Teams – Winter Escape</title>
+  <title>Teams – Winter Escape v4</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="bg">
@@ -16,7 +16,7 @@
         <div class="logo">📱</div>
         <div>
           <div class="title">Team-Ansicht</div>
-          <div class="subtitle">Dropdown-Gruppen • Code eingeben • weiter</div>
+          <div class="subtitle">Dropdown-Aufgaben • Token eingeben • weiter</div>
         </div>
       </div>
       <a class="btn tiny" href="team.html">🏠 Team</a>
@@ -27,8 +27,9 @@
     <section class="card">
       <h1 style="margin:0 0 10px">🚀 Eure Mission</h1>
       <p class="muted">
-        Öffnet die Gruppenaufgaben (Dropdown). Jede Gruppe liefert <strong>eine Zahl</strong> (A–D) an die Spielleitung.
-        Die Spielleitung berechnet den Freigabecode am Smartboard. Danach gebt ihr den Code unten ein.
+        Jede Gruppe (A–D) löst <b>ihre Aufgabe</b> und liefert <b>eine Zahl</b>.
+        Die Spielleitung rechnet am Board und nennt euch den <b>Token</b>.
+        <br><b>Ohne Token kein Weiter!</b>
       </p>
     </section>
 
@@ -44,7 +45,7 @@
 
     <section class="card small" style="margin-top:14px">
       <h2>👥 Gruppenaufgaben</h2>
-      <div class="smallHint">Damit nicht alles sofort sichtbar ist: erst antippen, dann lesen. 😉</div>
+      <div class="smallHint">Erst antippen → dann lesen. Jede Gruppe liefert <b>eine</b> Zahl.</div>
 
       <div class="row" style="margin-top:10px">
         <details><summary><span class="groupTag gA">Gruppe A</span><span class="muted">Tippen</span></summary><div class="smallHint" id="tA"></div></details>
@@ -61,18 +62,15 @@
     </section>
 
     <section class="card small" style="margin-top:14px">
-      <h2>🔐 Freigabecode</h2>
-      <p class="muted">Gebt den Code ein, den euch die Spielleitung nennt.</p>
+      <h2>🔐 Freigabe-Code</h2>
+      <p class="muted">Die Spielleitung berechnet den <b>Kapitel-Code</b> am Board. Nur mit dem richtigen Code kommt ihr weiter.</p>
       <div class="row">
-        <input id="codeIn" placeholder="Code / Wort" inputmode="text" style="max-width:230px">
+        <input id="codeIn" placeholder="Kapitel-Code (Zahl)" inputmode="numeric" style="max-width:240px">
         <button class="btn primary" id="btnCheck">✅ Prüfen</button>
         <button class="btn" id="btnNext" style="display:none">➡️ Weiter</button>
       </div>
       <div class="row" style="margin-top:10px">
         <span class="chip" id="msg" style="display:none"></span>
-      </div>
-      <div class="smallHint" style="margin-top:10px">
-        Hinweis: Ohne Server kann das Handy den Board‑Code nicht „prüfen“. Die Spielleitung entscheidet. Wenn ihr den Code korrekt bekommen habt, geht’s weiter.
       </div>
     </section>
 
@@ -84,14 +82,14 @@
       </div>
     </section>
 
-    <footer class="footer">12 Kapitel inkl. Finale • für 90 Minuten ausgelegt</footer>
+    <footer class="footer">v4 • Token-Sperre • 16 Kapitel</footer>
   </main>
 
   <script src="app.js"></script>
   <script>
     (function(){
       const snow=document.getElementById("snow");
-      for(let i=0;i<22;i++){
+      for(let i=0;i<18;i++){
         const f=document.createElement("div");
         f.className="flake";
         f.style.left=(Math.random()*100)+"vw";
@@ -108,7 +106,6 @@
     const chapterH=document.getElementById("chapterH");
     const chapterSub=document.getElementById("chapterSub");
     const progressChip=document.getElementById("progressChip");
-
     const tA=document.getElementById("tA");
     const tB=document.getElementById("tB");
     const tC=document.getElementById("tC");
@@ -125,15 +122,11 @@
       msg.style.border = ok ? "1px solid rgba(90,255,180,.5)" : "1px solid rgba(255,80,180,.5)";
       msg.style.background = ok ? "rgba(90,255,180,.12)" : "rgba(255,80,180,.10)";
     }
-
-    function closeAllDetails(){
-      document.querySelectorAll("details").forEach(d=>d.open=false);
-    }
+    function closeAllDetails(){ document.querySelectorAll("details").forEach(d=>d.open=false); }
 
     function render(){
       const info = ESC.CHAPTERS[current];
       progressChip.textContent = "Kapitel: " + current;
-
       closeAllDetails();
       btnNext.style.display="none";
       msg.style.display="none";
@@ -148,58 +141,56 @@
 
       chapterH.textContent = info.title || ("Kapitel "+current);
 
-      if(info.codeType==="word"){
-        chapterSub.textContent = "Finale: Der Code ist ein Wort.";
-        tA.innerHTML = "Finale‑Hinweis: Es ist ein kurzer Weihnachts‑Code (Englisch, 4 Buchstaben).";
-        tB.innerHTML = "Wenn ihr es habt: sauber eintippen (ohne Leerzeichen).";
-        tC.innerHTML = "Wenn ihr unsicher seid: fragt nach einem Mini‑Tipp.";
-        tD.innerHTML = "Bleibt fair: nicht wild raten – ihr seid fast am Ziel.";
+      if(current===16){
+        chapterSub.textContent = "Finale: Holt euch den finalen Token von der Spielleitung.";
+        tA.innerHTML = "<b>Finale:</b> Habt ihr den 4-stelligen Code? Dann holt den Token.";
+        tB.innerHTML = "Hinweis: Der finale Code ist fest (kein Wort, keine Diskussion).";
+        tC.innerHTML = "Wenn ihr hängt: fragt nach 1 Tipp.";
+        tD.innerHTML = "Fair bleiben – nicht einfach raten.";
         return;
       }
 
-      chapterSub.textContent = "Gebt A–D an die Spielleitung. Dort wird der Code berechnet.";
+      chapterSub.textContent = "Gebt A–D an die Spielleitung. Dort werden Code + Token berechnet.";
       tA.innerHTML = info.groups?.A || "—";
       tB.innerHTML = info.groups?.B || "—";
       tC.innerHTML = info.groups?.C || "—";
       tD.innerHTML = info.groups?.D || "—";
     }
 
+    
     btnCheck.addEventListener("click", ()=>{
-      const info = ESC.CHAPTERS[current];
-      if(!info){ show(false,"❌ Kapitel fehlt."); return; }
-
-      const entered = (codeIn.value||"").trim();
-      if(info.codeType==="word"){
-        const ok = entered.toUpperCase() === String(info.code||"XMAS").toUpperCase();
-        if(ok){
-          show(true,"🎁 Richtig! Finale gelöst!");
-          ESC.fxConfetti(2600);
-          btnNext.style.display="none";
-        } else {
-          show(false,"❌ Falsch. Hinweis beachten.");
-          ESC.fxConfetti(800);
-        }
-        return;
-      }
-
-      if(!/^[0-9]{1,5}$/.test(entered)){
-        show(false,"❌ Bitte nur Ziffern (1–5 Stellen).");
+      const raw = (codeIn.value || "").trim();
+      const entered = Number(raw);
+      if(!raw || !Number.isFinite(entered)){
+        show(false,"❌ Bitte eine Zahl eingeben.");
         ESC.fxConfetti(700);
         return;
       }
-      show(true,"✅ Code akzeptiert! Weiter…");
-      ESC.fxConfetti(2200);
+
+      const expected = ESC.SOLUTIONS[current];
+      if(!Number.isFinite(expected)){
+        show(false,"❌ Für dieses Kapitel ist kein Code hinterlegt.");
+        return;
+      }
+
+      if(entered !== expected){
+        show(false,"❌ Code falsch. Nochmal checken (oder Tipp holen).");
+        ESC.fxConfetti(900);
+        btnNext.style.display="none";
+        return;
+      }
+
+      show(true,"✅ Code richtig! Weiter freigeschaltet.");
+      ESC.fxConfetti(2600);
       btnNext.style.display="inline-flex";
     });
 
-    btnNext.addEventListener("click", ()=>{
+btnNext.addEventListener("click", ()=>{
       const info = ESC.CHAPTERS[current];
       if(!info) return;
       if(info.next && ESC.CHAPTERS[info.next]){
         current = info.next;
         ESC.saveTeam(current);
-        render();
-      } else {
         render();
       }
     });

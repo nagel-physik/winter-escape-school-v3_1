@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Spielleitung – Winter Escape</title>
+  <title>Spielleitung – Winter Escape v4</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="bg">
@@ -15,20 +15,20 @@
       <div class="brand">
         <div class="logo">🖥️</div>
         <div>
-          <div class="title">Spielleitung</div>
-          <div class="subtitle">Kapitel wählen • Zahlen eintragen • Code berechnen</div>
+          <div class="title">Spielleitung (Board)</div>
+          <div class="subtitle">A–D eingeben • Code berechnen • Token ansagen</div>
         </div>
       </div>
-      <a class="btn tiny" href="index.html">⬅️ Start</a>
+      <a class="btn tiny" href="index.html">🏠 Start</a>
     </div>
   </header>
 
   <main class="wrap">
     <section class="card">
-      <h1 style="margin:0 0 10px">🎮 Control Center</h1>
+      <h1 style="margin:0 0 8px">🎮 Control Center</h1>
       <p class="muted">
-        Teams geben euch 4 Zahlen (A–D). Ihr tragt sie ein, klickt <strong>Berechnen</strong> und nennt den Code.
-        <br><span class="kbd">Hinweis:</span> Ohne Server kann das Smartboard den Code nicht automatisch auf fremde Handys „pushen“. Teams tippen den Code selbst ein.
+        Nach <b>Berechnen</b> bekommst du <b>Code</b> (pädagogisch) + <b>Token</b> (Sperre).
+        Teams kommen nur mit dem <b>Code</b> weiter (Token optional).
       </p>
     </section>
 
@@ -37,17 +37,13 @@
         <div style="flex:1; min-width:260px">
           <h2>📌 Kapitel</h2>
           <div class="row">
-            <select id="chapterSel" style="min-width:320px"></select>
-            <span class="chip" id="chipType">…</span>
+            <select id="chapterSel" style="min-width:360px"></select>
+            <span class="chip" id="chipType">BERECHNUNG</span>
           </div>
           <div class="smallHint" id="chapterTitle"></div>
         </div>
-
-        <div style="text-align:right">
-          <div class="chip">Reset möglich</div>
-          <div class="row" style="justify-content:flex-end; margin-top:8px">
-            <button class="btn tiny danger" id="resetAll">♻️ Reset (Board)</button>
-          </div>
+        <div class="row" style="justify-content:flex-end">
+          <button class="btn tiny danger" id="resetAll">♻️ Reset (Board)</button>
         </div>
       </div>
     </section>
@@ -63,17 +59,20 @@
       </div>
 
       <div class="rulebox" style="margin-top:12px">
-        <div class="row" style="justify-content:space-between">
-          <div>
+        <div class="row" style="justify-content:space-between; align-items:flex-start">
+          <div style="flex:1; min-width:260px">
             <div class="muted">Rechenregel:</div>
-            <div style="font-weight:1000" id="formulaName">…</div>
+            <div style="font-weight:1000" id="formulaName">—</div>
+            <div class="smallHint" id="hintBox" style="margin-top:10px"></div>
           </div>
+
           <div style="text-align:right">
             <div class="muted">Code:</div>
             <div class="bigCode bigPulse" id="outCode">—</div>
+            <div style="margin-top:10px" class="muted">Token (optional):</div>
+            <div class="bigCode bigPulse" id="outToken" style="font-size:40px">—</div>
           </div>
         </div>
-        <div class="smallHint" id="hintBox" style="margin-top:10px"></div>
       </div>
 
       <div class="row" style="margin-top:12px">
@@ -81,25 +80,29 @@
       </div>
     </section>
 
-    <section class="card small" style="margin-top:14px" id="wordCard" hidden>
-      <h2>🎁 Finale (Kapitel 12)</h2>
-      <p class="muted">Der finale Code ist ein Wort. Teams geben es ein.</p>
+    <section class="card small" style="margin-top:14px" id="finalCard" hidden>
+      <h2>🎁 Finale (Kapitel 16)</h2>
+      <p class="muted">Finale ist eine <b>4-stellige Zahl</b>. Danach gibst du den Token fürs Ende.</p>
       <div class="rulebox" style="margin-top:12px">
         <div class="row" style="justify-content:space-between">
-          <div class="muted">Finales Wort:</div>
-          <div class="bigCode bigPulse" id="finalWord">XMAS</div>
+          <div class="muted">Final-Code:</div>
+          <div class="bigCode bigPulse" id="finalCode">2412</div>
+        </div>
+        <div class="row" style="justify-content:space-between; margin-top:10px">
+          <div class="muted">Final-Token:</div>
+          <div class="bigCode bigPulse" id="finalToken" style="font-size:40px">—</div>
         </div>
       </div>
     </section>
 
-    <footer class="footer">Spielleitung • sichtbare Berechnung • großer Konfetti‑Effekt</footer>
+    <footer class="footer">v4 • Token-Sperre • 16 Kapitel</footer>
   </main>
 
   <script src="app.js"></script>
   <script>
     (function(){
       const snow=document.getElementById("snow");
-      for(let i=0;i<22;i++){
+      for(let i=0;i<18;i++){
         const f=document.createElement("div");
         f.className="flake";
         f.style.left=(Math.random()*100)+"vw";
@@ -114,15 +117,15 @@
 
     const st = ESC.loadBoard();
     const sel = document.getElementById("chapterSel");
-    const chipType = document.getElementById("chipType");
     const titleEl = document.getElementById("chapterTitle");
     const formulaName = document.getElementById("formulaName");
     const hintBox = document.getElementById("hintBox");
     const outCode = document.getElementById("outCode");
-
+    const outToken = document.getElementById("outToken");
     const calcCard=document.getElementById("calcCard");
-    const wordCard=document.getElementById("wordCard");
-    const finalWord=document.getElementById("finalWord");
+    const finalCard=document.getElementById("finalCard");
+    const finalCode=document.getElementById("finalCode");
+    const finalToken=document.getElementById("finalToken");
 
     const ids = Object.keys(ESC.CHAPTERS).map(n=>parseInt(n,10)).sort((a,b)=>a-b);
     for(const id of ids){
@@ -142,39 +145,38 @@
       const ch = parseInt(sel.value,10);
       const info = ESC.CHAPTERS[ch];
       titleEl.textContent = info.title || ("Kapitel "+ch);
-      chipType.textContent = info.codeType==="word" ? "WORT‑CODE" : "BERECHNUNG";
       hintBox.textContent = chapterHint(ch);
       formulaName.textContent = info.formulaName || "—";
 
-      if(info.codeType==="word"){
+      if(ch===16){
         calcCard.hidden=true;
-        wordCard.hidden=false;
-        finalWord.textContent = info.code || "XMAS";
-        outCode.textContent = "—";
+        finalCard.hidden=false;
+        finalCode.textContent = String(info.finalCode || 2412);
+        finalToken.textContent = ESC.makeToken(16, info.finalCode || 2412);
       } else {
         calcCard.hidden=false;
-        wordCard.hidden=true;
+        finalCard.hidden=true;
       }
-      ESC.saveBoard({chapter: ch, lastCode: (ESC.loadBoard().lastCode||"")});
-    }
-
-    function getInputs(){
-      return [Number(document.getElementById("inA").value), Number(document.getElementById("inB").value),
-              Number(document.getElementById("inC").value), Number(document.getElementById("inD").value)];
     }
 
     document.getElementById("btnCalc").addEventListener("click", ()=>{
       const ch = parseInt(sel.value,10);
       const info = ESC.CHAPTERS[ch];
-      if(!info || info.codeType==="word") return;
+      if(!info || ch===16) return;
 
-      let vals = getInputs();
+      let A = Number(document.getElementById("inA").value);
+      let B = Number(document.getElementById("inB").value);
+      let C = Number(document.getElementById("inC").value);
+      let D = Number(document.getElementById("inD").value);
+      let vals=[A,B,C,D];
       if(info.normalize) vals = info.normalize(vals);
-      const [A,B,C,D] = vals;
+      [A,B,C,D]=vals;
 
       const code = info.compute(A,B,C,D);
+      const token = ESC.makeToken(ch, code);
+
       outCode.textContent = String(code);
-      ESC.saveBoard({chapter: ch, lastCode: String(code)});
+      outToken.textContent = token;
       ESC.fxConfetti(2400);
     });
 
@@ -185,12 +187,12 @@
         sel.value = String(info.next);
         render();
       } else {
-        sel.value="12"; render();
+        sel.value="16"; render();
       }
     });
 
     document.getElementById("resetAll").addEventListener("click", ()=>{
-      if(confirm("Board-Reset? (Kapitel zurück auf 1)")){
+      if(confirm("Board-Reset?")){
         localStorage.removeItem(ESC.KEY_BOARD);
         location.reload();
       }
