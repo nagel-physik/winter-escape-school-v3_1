@@ -1,5 +1,5 @@
 (function(){
-  const VERSION = "v4_3_DE";
+  const VERSION = "v4_4_DE";
   const KEY_BOARD = "escape_board_state_"+VERSION;
   const KEY_TEAM  = "escape_team_progress_"+VERSION;
 
@@ -98,40 +98,40 @@
   const CHAPTERS = {
     1:{ title:"Kapitel 1 – Briefing: Frostige Mission ❄️", next:2,
       groups:{
-        A:`<b>Zeitplanung</b><br>Treffpunkt ist 08:20. Für Aufbau braucht ihr 25 Minuten und ihr wollt 10 Minuten Puffer.<br><br><b>Aufgabe:</b> Wie viele Minuten <i>vor</i> 08:20 muss begonnen werden?`,
-        B:`<b>Mini-Kahoot (genau lesen)</b><br>Welche Aussage stimmt immer?<br>1) Jede Primzahl ist ungerade.<br>2) Jede gerade Zahl ist durch 2 teilbar.<br>3) Jede Zahl mit 0 am Ende ist eine Primzahl.<br><br><b>Antwort:</b> nur die Optionsnummer`,
-        C:`<b>Alltagsmathe</b><br>Ihr habt 3 Kurzstunden à 40 Minuten am Stück.<br><br><b>Aufgabe:</b> Wie viele Minuten sind das insgesamt?`,
-        D:`<b>Logikfalle</b><br>Schreibe die Zahl 9. Addiere 1. Subtrahiere 1. Multipliziere mit 1.<br><br><b>Ergebnis:</b> Zahl`
+        A:`<b>Aufgabe 1 (Mathe):</b> 7·5 = ?<br><b>Aufgabe 2 (Transfer):</b> Addiere 0 (nichts verändern).<br><b>Eingabe:</b> Ergebnis (nur Zahl).`,
+        B:`<b>Aufgabe 1 (Logik):</b> Welche Aussage ist immer richtig?<br>1) Jede Primzahl ist ungerade.<br>2) Jede gerade Zahl ist durch 2 teilbar.<br>3) Jede Zahl, die auf 0 endet, ist prim.<br><b>Aufgabe 2:</b> Gib nur die <b>Nummer</b> ein.`,
+        C:`<b>Aufgabe 1 (Zeit):</b> 3 Kurzstunden à 40 min.<br><b>Aufgabe 2:</b> Rechne 3·40.<br><b>Eingabe:</b> Minuten gesamt.`,
+        D:`<b>Aufgabe 1 (Idiotentest):</b> Starte mit 9.<br><b>Aufgabe 2:</b> +1, −1, ×1.<br><b>Eingabe:</b> Endzahl.`
       },
       formulaName:"A + (B×11) + (C÷10) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A + (B*11) + (C/10) + (D*7))
     },
     2:{ title:"Kapitel 2 – Klick oder Kopf? 📱🧠", next:3,
       groups:{
-        A:`<b>Medienkompetenz</b><br>„Wenn etwas viele Likes hat, ist es wahr.“<br>1 = wahr • 2 = falsch`,
-        B:`<b>Fake-Details</b><br>Ein Post verspricht „Nur heute 70% Rabatt!“ Unten steht klein: „Gilt nur auf ausgewählte Artikel.“<br><br><b>Aufgabe:</b> Wie viele Wörter hat dieser kleine Satz?`,
-        C:`<b>Datenschutz</b><br>Wähle: 1) Passwort überall gleich ist okay • 2) ist riskant • 3) ist egal<br><br><b>Antwort:</b> Optionsnummer`,
-        D:`<b>Idiotentest</b><br>Wie viele Monate haben 28 Tage?<br><br><b>Antwort:</b> Zahl`
+        A:`<b>Aufgabe 1 (Informatik):</b> „Viele Likes = wahr“ ist …<br>1) wahr  2) falsch<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        B:`<b>Aufgabe 1 (Deutsch):</b> Zähle die Wörter im Satz:<br><i>„Gilt nur auf ausgewählte Artikel.“</i><br><b>Aufgabe 2:</b> Gib die Wortanzahl ein.`,
+        C:`<b>Aufgabe 1 (IT-Sicherheit):</b> Gleiches Passwort überall ist …<br>1) okay  2) riskant  3) egal<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        D:`<b>Aufgabe 1 (Trickfrage):</b> Wie viele Monate haben 28 Tage?<br><b>Aufgabe 2:</b> Denk an „mindestens 28 Tage“.<br><b>Eingabe:</b> Zahl.`
       },
       formulaName:"(A×10) + (B×3) + (C×9) + (D×2)",
       compute:(A,B,C,D)=>Math.round((A*10)+(B*3)+(C*9)+(D*2))
     },
     3:{ title:"Kapitel 3 – Physik leicht, Fehler schwer ⚡", next:4,
       groups:{
-        A:`<b>Physik</b><br>Ein Fahrrad fährt 180 m in 12 s.<br><br><b>Aufgabe:</b> Geschwindigkeit in m/s (ganze Zahl).`,
-        B:`<b>Stellenwert-Falle</b><br>Welche Zahl ist am größten?<br>1) 0,9<br>2) 0,10<br>3) 0,099<br><br><b>Antwort:</b> Optionsnummer`,
-        C:`<b>Einheiten</b><br>3 Minuten sind wie viele Sekunden?<br><br><b>Antwort:</b> Zahl`,
-        D:`<b>Mini-Formel</b><br>Wenn etwas doppelt so groß wird und du halbierst es wieder: bleibt es…<br>1) größer • 2) gleich • 3) kleiner<br><br><b>Antwort:</b> Optionsnummer`
+        A:`<b>Aufgabe 1 (Physik):</b> s = 180 m, t = 12 s.<br><b>Aufgabe 2:</b> v = s/t. Runde auf ganze Zahl.<br><b>Eingabe:</b> v (m/s).`,
+        B:`<b>Aufgabe 1 (Kopfrechnen):</b> 0,9 = 0,900 …<br>Welche Zahl ist am größten?<br>1) 0,9  2) 0,10  3) 0,099<br><b>Aufgabe 2:</b> Gib nur die Nummer ein.`,
+        C:`<b>Aufgabe 1 (Zeit):</b> 3 Minuten.<br><b>Aufgabe 2:</b> Umrechnen in Sekunden.<br><b>Eingabe:</b> Sekunden.`,
+        D:`<b>Aufgabe 1 (Logik):</b> Verdoppeln und danach halbieren.<br><b>Aufgabe 2:</b> Ergebnis ist … 1) größer 2) gleich 3) kleiner<br><b>Eingabe:</b> Nummer.`
       },
       formulaName:"(A×2) + (B×13) + (C÷30) + (D×9)",
       compute:(A,B,C,D)=>Math.round((A*2)+(B*13)+(C/30)+(D*9))
     },
     4:{ title:"Kapitel 4 – Spanne statt Streit (Toleranz) 🧬", next:5,
       groups:{
-        A:`<b>Schätzung (Toleranz)</b><br>Atemzüge pro Minute in Ruhe.<br><b>Akzeptiert:</b> 12–20`,
-        B:`<b>Schätzung (Toleranz)</b><br>Sauerstoffanteil der Luft in %.<br><b>Akzeptiert:</b> 20–23`,
-        C:`<b>Schätzung (Toleranz)</b><br>Schlafbedarf Teenager in Stunden.<br><b>Akzeptiert:</b> 8–10`,
-        D:`<b>Multiple Choice</b><br>Wie viele Muskeln hat der Mensch ungefähr?<br>1) ~200 • 2) ~400 • 3) ~650<br><b>Antwort:</b> Optionsnummer`
+        A:`<b>Aufgabe 1 (Bio):</b> Ein Mensch hat normalerweise <b>2</b> Lungenflügel.<br><b>Aufgabe 2 (Mathe):</b> 8·2 = ?<br><b>Eingabe:</b> Zahl.`,
+        B:`<b>Aufgabe 1 (Chemie):</b> pH-Wert von Wasser ist ungefähr 7.<br><b>Aufgabe 2 (Mathe):</b> 7·3 = ?<br><b>Eingabe:</b> Zahl.`,
+        C:`<b>Aufgabe 1 (Physik):</b> 1 Stunde = 60 Minuten.<br><b>Aufgabe 2:</b> 60/ ? = 9 ⇒ ? = ? (Tipp: 60/ ? = 9).<br><b>Eingabe:</b> 9 (nur Zahl).`,
+        D:`<b>Aufgabe 1 (Bio):</b> Wie viele Basenpaare hat ein DNA-Baustein? (A–T und C–G bilden Paare.)<br><b>Aufgabe 2:</b> Wähle: 1) 1  2) 2  3) 4<br><b>Eingabe:</b> Nummer.`
       },
       formulaName:"A + B + C + (D×10)  (Toleranz aktiv)",
       normalize:(vals)=>{
@@ -146,110 +146,110 @@
     },
     5:{ title:"Kapitel 5 – Kaufen oder Ködern 🛒", next:6,
       groups:{
-        A:`<b>Rabatt</b><br>„Statt 2,99€ nur 2,49€“ – wie viele Cent sind das weniger?`,
-        B:`<b>Influencer (Kategorie statt Schätzen)</b><br>In 15 Minuten Social Media:<br>1) 0–1 Werbung • 2) 2–4 • 3) 5+<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>2 kaufen – 1 gratis</b><br>Du nimmst 6 Riegel. Wie viele bezahlst du?`,
-        D:`<b>Prozent</b><br>20% Rabatt auf 50€ = ? (nur die Rabatt-Eurozahl)`
+        A:`<b>Aufgabe 1 (WAT):</b> 2,99€ → 2,49€.<br><b>Aufgabe 2:</b> Differenz in Cent (nur Zahl).`,
+        B:`<b>Aufgabe 1 (Alltag):</b> In 15 Minuten Social Media siehst du meistens nicht „0“, aber auch nicht ständig „5+“.<br>Welche Kategorie ist am realistischsten?<br>1) 0–1  2) 2–4  3) 5+<br><b>Aufgabe 2:</b> Gib die <b>Nummer</b> ein (nicht die Werbezahl!).`,
+        C:`<b>Aufgabe 1 (Mathe):</b> Aktion „3 zum Preis von 2“.<br><b>Aufgabe 2:</b> Bei 6 Riegeln: Wie viele bezahlst du? (nur Zahl).`,
+        D:`<b>Aufgabe 1 (Prozent):</b> 20% von 50€.<br><b>Aufgabe 2:</b> Rabatt in Euro (nur Zahl).`
       },
       formulaName:"A + (B×8) + (C×3) + (D×2)",
       compute:(A,B,C,D)=>Math.round(A+(B*8)+(C*3)+(D*2))
     },
     6:{ title:"Kapitel 6 – Sprache & Codes 📝", next:7,
       groups:{
-        A:`<b>Deutsch</b><br>Wie viele Buchstaben hat „Prüfung“? (Umlaute zählen als 1)`,
-        B:`<b>Rechtschreibung</b><br>Welche Schreibweise ist korrekt?<br>1) seit dem • 2) seid dem • 3) seiddem<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Englisch</b><br>„I’m excited“ bedeutet meistens…<br>1) aufgeregt/freue mich • 2) wütend • 3) gelangweilt<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Vokale zählen</b><br>Zähle die Vokale (a,e,i,o,u) in „education“.`
+        A:`<b>Aufgabe 1 (Deutsch):</b> Zähle die Buchstaben in „Prüfung“ (ü zählt als 1).<br><b>Aufgabe 2:</b> Gib die Anzahl ein.`,
+        B:`<b>Aufgabe 1:</b> Welche Schreibweise ist korrekt?<br>1) seit dem  2) seid dem  3) seiddem<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        C:`<b>Aufgabe 1 (Englisch):</b> „I’m excited“ bedeutet meistens …<br>1) aufgeregt/freue mich  2) wütend  3) gelangweilt<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        D:`<b>Aufgabe 1 (Englisch):</b> Zähle die Vokale a,e,i,o,u in „education“.<br><b>Aufgabe 2:</b> Gib die Anzahl ein.`
       },
       formulaName:"(A×5) + (B×9) + (C×7) + (D×3)",
       compute:(A,B,C,D)=>Math.round((A*5)+(B*9)+(C*7)+(D*3))
     },
     7:{ title:"Kapitel 7 – Logik & Fallen 🧩", next:8,
       groups:{
-        A:`<b>Reihenfolge!</b><br>Startzahl 14. Addiere 10 und halbiere dann. Ergebnis?`,
-        B:`<b>Geometrie</b><br>Ein Quader hat…<br>1) 4 Flächen • 2) 6 Flächen • 3) 8 Flächen<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Wort zählen</b><br>„WEIHNACHTEN“ hat wie viele Buchstaben? Subtrahiere 5.`,
-        D:`<b>Brüche</b><br>Welcher Bruch ist am größten?<br>1) 3/8 • 2) 4/9 • 3) 5/12<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Aufgabe 1 (Rechnen):</b> Start 14, +10, dann halbieren.<br><b>Aufgabe 2:</b> Ergebnis eintragen.`,
+        B:`<b>WICHTIG:</b> Bei Multiple Choice immer nur die <b>Nummer 1/2/3</b> eingeben!<br>Ein Quader hat wie viele Flächen?<br>1) 4  2) 6  3) 8<br><b>Eingabe:</b> Nummer.`,
+        C:`<b>Aufgabe 1 (Wort → Zahl):</b> Zähle Buchstaben von „WEIHNACHTEN“.<br><b>Aufgabe 2:</b> Ziehe 5 ab. Ergebnis eingeben.`,
+        D:`<b>Aufgabe 1 (Brüche):</b> Welcher Bruch ist am größten?<br>1) 3/8  2) 4/9  3) 5/12<br><b>Aufgabe 2:</b> Nummer eingeben.`
       },
       formulaName:"A + (B×10) + (C×2) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A+(B*10)+(C*2)+(D*7))
     },
     8:{ title:"Kapitel 8 – Energie im Alltag ⚡", next:9,
       groups:{
-        A:`<b>Zeit</b><br>Wasserkocher läuft 3 Minuten. Wie viele Sekunden?`,
-        B:`<b>Temperatur</b><br>Von −2°C auf 20°C: Temperaturänderung?`,
-        C:`<b>Schaltzeichen</b><br>Kreis mit Kreuz steht für… 1) Batterie 2) Lampe 3) Schalter<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Idiotentest</b><br>Wie viele Monate haben 28 Tage?`
+        A:`<b>Aufgabe 1 (Zeit):</b> 3 Minuten.<br><b>Aufgabe 2:</b> Sekunden? (nur Zahl).`,
+        B:`<b>Aufgabe 1 (Temperatur):</b> −2°C → 20°C.<br><b>Aufgabe 2:</b> Temperaturänderung als Zahl.`,
+        C:`<b>Aufgabe 1 (Physik):</b> Kreis mit Kreuz = welches Bauteil?<br>1) Batterie  2) Lampe  3) Schalter<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        D:`<b>Aufgabe 1 (Trickfrage):</b> Wie viele Monate haben 28 Tage?<br><b>Aufgabe 2:</b> Zahl eingeben.`
       },
       formulaName:"(A÷30) + (B×2) + (C×9) + (D×8)",
       compute:(A,B,C,D)=>Math.round((A/30)+(B*2)+(C*9)+(D*8))
     },
     9:{ title:"Kapitel 9 – Alltag & Fair Play 🤝", next:10,
       groups:{
-        A:`<b>Meinungsfreiheit</b><br>Was passt am ehesten?<br>1) alles sagen ohne Folgen • 2) Meinung ja, aber ohne Beleidigung/Drohung • 3) immer Mehrheit übernehmen<br><b>Antwort:</b> 1/2/3`,
-        B:`<b>Online-Streit</b><br>Was hilft am ehesten?<br>1) provozieren • 2) Pause/melden/Beweise sichern • 3) alles posten<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Fair teilen</b><br>18 Kekse auf 5 Personen: wie viele bleiben übrig?`,
-        D:`<b>Bio</b><br>Welche Zelle transportiert Sauerstoff?<br>1) Nervenzelle • 2) rotes Blutkörperchen • 3) Hautzelle<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Aufgabe 1 (Sozial):</b> Aussage: „Meinung ja – aber ohne Beleidigung/Drohung.“<br>Welche Nummer passt?<br>1) alles sagen ohne Folgen  2) Meinung ja, ohne Beleidigung  3) immer Mehrheit übernehmen<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        B:`<b>Aufgabe 1 (Online-Konflikt):</b> Was ist am sinnvollsten?<br>1) provozieren  2) Pause/melden/Beweise sichern  3) alles posten<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        C:`<b>Aufgabe 1 (Mathe):</b> 18 Kekse auf 5 Personen.<br><b>Aufgabe 2:</b> Wie viele bleiben übrig? (Rest).`,
+        D:`<b>Aufgabe 1 (Bio):</b> Sauerstoff transportieren …<br>1) Nervenzelle  2) rotes Blutkörperchen  3) Hautzelle<br><b>Aufgabe 2:</b> Nummer eingeben.`
       },
       formulaName:"(A×6) + (B×6) + (C×5) + (D×7)",
       compute:(A,B,C,D)=>Math.round((A*6)+(B*6)+(C*5)+(D*7))
     },
     10:{ title:"Kapitel 10 – KI & Bullshit-Radar 🛰️", next:11,
       groups:{
-        A:`<b>True/False</b><br>„Ein Screenshot ist immer ein Beweis.“ 1=wahr 2=falsch`,
-        B:`<b>True/False</b><br>„Ein KI-Text kann Fehler enthalten.“ 1=nein 2=ja`,
-        C:`<b>Buchstaben</b><br>Zähle die Buchstaben in „algorithmus“.`,
-        D:`<b>Passwort</b><br>Was ist am stärksten?<br>1) 12345678 • 2) passwort • 3) T7!kZ2#pQ9<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Aufgabe 1:</b> „Ein Screenshot ist immer ein Beweis.“<br>1) wahr  2) falsch<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        B:`<b>Aufgabe 1:</b> „Ein KI-Text kann Fehler enthalten.“<br>1) nein  2) ja<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        C:`<b>Aufgabe 1 (Deutsch):</b> Zähle die Buchstaben von „algorithmus“.<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        D:`<b>Aufgabe 1 (IT):</b> Was ist am stärksten?<br>1) 12345678  2) passwort  3) T7!kZ2#pQ9<br><b>Aufgabe 2:</b> Nummer eingeben.`
       },
       formulaName:"(A×10) + (B×10) + C + (D×9)",
       compute:(A,B,C,D)=>Math.round((A*10)+(B*10)+C+(D*9))
     },
     11:{ title:"Kapitel 11 – Boss-Quiz I 👑", next:12,
       groups:{
-        A:`<b>Genau lesen</b><br>Notiere 6. Addiere 2. Multipliziere mit 3. Ergebnis?`,
-        B:`<b>Umfang</b><br>Rechteck hat Umfang 30 cm. Eine Seite 8 cm. Andere Seite?`,
-        C:`<b>Physik</b><br>Erwärmen → Teilchen bewegen sich… 1) langsamer 2) gleich 3) schneller<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Wort</b><br>Wie viele Buchstaben hat „SCHNEE“?`
+        A:`<b>Aufgabe 1 (Mathe):</b> 6 + 2 = ?<br><b>Aufgabe 2:</b> Ergebnis ·3. Zahl eingeben.`,
+        B:`<b>Aufgabe 1 (Geometrie):</b> Umfang Rechteck 30 cm, Seite 8 cm.<br><b>Aufgabe 2:</b> Andere Seite? (nur Zahl).`,
+        C:`<b>Aufgabe 1 (Physik):</b> Erwärmen → Teilchen bewegen sich …<br>1) langsamer  2) gleich  3) schneller<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        D:`<b>Aufgabe 1 (Wort):</b> Buchstaben in „SCHNEE“.<br><b>Aufgabe 2:</b> Zahl eingeben.`
       },
       formulaName:"A + (B×2) + (C×11) + (D×4)",
       compute:(A,B,C,D)=>Math.round(A+(B*2)+(C*11)+(D*4))
     },
     12:{ title:"Kapitel 12 – Boss-Quiz II 🧠🔥", next:13,
       groups:{
-        A:`<b>Mathe</b><br>12% von 250 = ? (ganze Zahl)`,
-        B:`<b>Logik</b><br>Wenn heute Dienstag ist: in 10 Tagen ist… 1) Freitag 2) Samstag 3) Sonntag<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Sprache</b><br>Wie viele Silben hat „Information“? (In-for-ma-ti-on)`,
-        D:`<b>Idiotentest</b><br>Was ist schwerer: 1 kg Federn oder 1 kg Steine?<br>1) Federn 2) Steine 3) gleich<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Aufgabe 1 (Prozent):</b> 12% von 250.<br><b>Aufgabe 2:</b> Ganze Zahl eingeben.`,
+        B:`<b>Aufgabe 1 (Wochentag):</b> Heute Dienstag. In 10 Tagen ist …<br>1) Freitag  2) Samstag  3) Sonntag<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        C:`<b>Aufgabe 1 (Deutsch):</b> Silben in „Information“ (In-for-ma-ti-on).<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        D:`<b>Aufgabe 1 (Trick):</b> 1 kg Federn vs 1 kg Steine.<br>1) Federn  2) Steine  3) gleich<br><b>Aufgabe 2:</b> Nummer eingeben.`
       },
       formulaName:"A + (B×15) + (C×6) + (D×9)",
       compute:(A,B,C,D)=>Math.round(A+(B*15)+(C*6)+(D*9))
     },
     13:{ title:"Kapitel 13 – GeWi & Welt 🗺️", next:14,
       groups:{
-        A:`<b>Deutschland</b><br>Wie viele Bundesländer hat Deutschland?`,
-        B:`<b>EU</b><br>Wie viele Sterne hat die EU-Flagge?`,
-        C:`<b>Politik-Basis</b><br>Wie viele Jahre dauert eine Legislaturperiode des Bundestags?`,
-        D:`<b>Geografie</b><br>Welche ist die längste? 1) Rhein 2) Elbe 3) Oder<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Aufgabe 1 (GeWi):</b> Wie viele Bundesländer hat Deutschland?<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        B:`<b>Aufgabe 1 (EU):</b> Wie viele Sterne hat die EU-Flagge?<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        C:`<b>Aufgabe 1 (Politik):</b> Legislaturperiode Bundestag (Jahre).<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        D:`<b>Aufgabe 1 (Geografie):</b> Welche ist die längste? 1) Rhein 2) Elbe 3) Oder<br><b>Aufgabe 2:</b> Nummer eingeben.`
       },
       formulaName:"A + (B×3) + (C×7) + (D×11)",
       compute:(A,B,C,D)=>Math.round(A+(B*3)+(C*7)+(D*11))
     },
     14:{ title:"Kapitel 14 – WAT & Geld 🧾", next:15,
       groups:{
-        A:`<b>Fix vs. variabel</b><br>Wähle: 1) Miete ist variabel 2) Miete ist fix 3) egal<br><b>Antwort:</b> 1/2/3`,
-        B:`<b>Mehrwertsteuer</b><br>19% von 100€ sind wie viel €?`,
-        C:`<b>Budget</b><br>Du hast 50€. Du gibst 18€ und 12€ aus. Rest?`,
-        D:`<b>Rechnen</b><br>2,50€ pro Tag für 7 Tage: Gesamt in Cent?`
+        A:`<b>Aufgabe 1 (WAT):</b> Miete ist … 1) variabel  2) fix  3) egal<br><b>Aufgabe 2:</b> Nummer eingeben.`,
+        B:`<b>Aufgabe 1 (Mathe):</b> 19% von 100€.<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        C:`<b>Aufgabe 1 (Budget):</b> 50€ − 18€ − 12€.<br><b>Aufgabe 2:</b> Restbetrag eingeben.`,
+        D:`<b>Aufgabe 1 (Rechnen):</b> 2,50€ pro Tag für 7 Tage.<br><b>Aufgabe 2:</b> Gesamt in Cent eingeben.`
       },
       formulaName:"(A×20) + B + (C×4) + (D÷10)",
       compute:(A,B,C,D)=>Math.round((A*20)+B+(C*4)+(D/10))
     },
     15:{ title:"Kapitel 15 – Finale Vorbereitung 🎄", next:16,
       groups:{
-        A:`<b>Wort-Radar</b><br>Wie viele Buchstaben hat „WEIHNACHTSBAUM“?`,
-        B:`<b>Mathe</b><br>Summe der Ziffern von 2025?`,
-        C:`<b>Logik</b><br>Wenn du 3 Kerzen anzündest und 2 wieder auspustest: Wie viele Kerzen brennen?`,
-        D:`<b>Mini-Englisch</b><br>„Snow“ hat wie viele Buchstaben?`
+        A:`<b>Aufgabe 1 (Wort):</b> Buchstaben in „WEIHNACHTSBAUM“ zählen.<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        B:`<b>Aufgabe 1 (Mathe):</b> Ziffernsumme von 2025.<br><b>Aufgabe 2:</b> Zahl eingeben.`,
+        C:`<b>Aufgabe 1 (Logik):</b> 3 Kerzen an, 2 aus.<br><b>Aufgabe 2:</b> Wie viele brennen? Zahl eingeben.`,
+        D:`<b>Aufgabe 1 (Englisch):</b> Buchstaben in „Snow“.<br><b>Aufgabe 2:</b> Zahl eingeben.`
       },
       formulaName:"A + (B×9) + (C×12) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A+(B*9)+(C*12)+(D*7))
