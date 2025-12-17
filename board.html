@@ -6,7 +6,6 @@
   <title>Spielleitung – Winter Escape v4</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
-
 <body class="bg">
   <div class="snow" id="snow"></div>
   <div class="bgGlow"></div>
@@ -17,7 +16,7 @@
         <div class="logo">🖥️</div>
         <div>
           <div class="title">Spielleitung (Board)</div>
-          <div class="subtitle">A–D eingeben • Code berechnen • (optional Token)</div>
+          <div class="subtitle">A–D eingeben • Code berechnen • Token ansagen</div>
         </div>
       </div>
       <a class="btn tiny" href="index.html">🏠 Start</a>
@@ -27,39 +26,36 @@
   <main class="wrap">
     <section class="card">
       <h1 style="margin:0 0 8px">🎮 Control Center</h1>
-      <p class="muted" style="margin:0">
-        Teams geben euch A–D. Ihr rechnet den <b>Kapitel-Code</b>. (Token wird weiterhin angezeigt, falls du ihn nutzen willst.)
-        <br><b>Wichtig:</b> Beim Kapitelwechsel wird alles automatisch zurückgesetzt.
+      <p class="muted">
+        Nach <b>Berechnen</b> bekommst du <b>Code</b> (pädagogisch) + <b>Token</b> (Sperre).
+        Teams kommen nur mit dem <b>Code</b> weiter (Token optional).
       </p>
     </section>
 
     <section class="card small" style="margin-top:14px">
       <div class="row" style="justify-content:space-between; align-items:flex-end">
         <div style="flex:1; min-width:260px">
-          <h2 style="margin:0 0 8px">📌 Kapitel</h2>
+          <h2>📌 Kapitel</h2>
           <div class="row">
             <select id="chapterSel" style="min-width:360px"></select>
             <span class="chip" id="chipType">BERECHNUNG</span>
           </div>
-          <div class="smallHint" id="chapterTitle" style="margin-top:8px"></div>
-          <div class="smallHint" id="hintBox" style="margin-top:6px"></div>
+          <div class="smallHint" id="chapterTitle"></div>
         </div>
-
         <div class="row" style="justify-content:flex-end">
-          <button class="btn tiny danger" id="resetBoard" type="button">♻️ Reset Board</button>
+          <button class="btn tiny danger" id="resetAll">♻️ Reset (Board)</button>
         </div>
       </div>
     </section>
 
     <section class="card small" style="margin-top:14px" id="calcCard">
-      <h2 style="margin:0 0 10px">🧮 Eingaben (A–D)</h2>
-
+      <h2>🧮 Eingaben (A–D)</h2>
       <div class="row">
         <input id="inA" type="number" placeholder="A" style="width:120px">
         <input id="inB" type="number" placeholder="B" style="width:120px">
         <input id="inC" type="number" placeholder="C" style="width:120px">
         <input id="inD" type="number" placeholder="D" style="width:120px">
-        <button class="btn primary" id="btnCalc" type="button">🎆 Berechnen</button>
+        <button class="btn primary" id="btnCalc">🎆 Berechnen</button>
       </div>
 
       <div class="rulebox" style="margin-top:12px">
@@ -67,6 +63,7 @@
           <div style="flex:1; min-width:260px">
             <div class="muted">Rechenregel:</div>
             <div style="font-weight:1000" id="formulaName">—</div>
+            <div class="smallHint" id="hintBox" style="margin-top:10px"></div>
           </div>
 
           <div style="text-align:right">
@@ -79,32 +76,30 @@
       </div>
 
       <div class="row" style="margin-top:12px">
-        <button class="btn tiny" id="btnNext" type="button">➡️ Nächstes Kapitel</button>
+        <button class="btn tiny" id="btnNext">➡️ Kapitel weiter</button>
       </div>
     </section>
 
     <section class="card small" style="margin-top:14px" id="finalCard" hidden>
-      <h2 style="margin:0 0 8px">🎁 Finale (Kapitel 16)</h2>
-      <p class="muted" style="margin:0">Finale ist eine <b>4-stellige Zahl</b> (für die Teams).</p>
-
+      <h2>🎁 Finale (Kapitel 16)</h2>
+      <p class="muted">Finale ist eine <b>4-stellige Zahl</b>. Danach gibst du den Token fürs Ende.</p>
       <div class="rulebox" style="margin-top:12px">
         <div class="row" style="justify-content:space-between">
           <div class="muted">Final-Code:</div>
           <div class="bigCode bigPulse" id="finalCode">2412</div>
         </div>
         <div class="row" style="justify-content:space-between; margin-top:10px">
-          <div class="muted">Final-Token (optional):</div>
+          <div class="muted">Final-Token:</div>
           <div class="bigCode bigPulse" id="finalToken" style="font-size:40px">—</div>
         </div>
       </div>
     </section>
 
-    <footer class="footer">v4 • Board</footer>
+    <footer class="footer">v4 • Token-Sperre • 16 Kapitel</footer>
   </main>
 
   <script src="app.js"></script>
   <script>
-    // Snow
     (function(){
       const snow=document.getElementById("snow");
       for(let i=0;i<18;i++){
@@ -120,125 +115,91 @@
       }
     })();
 
+    const st = ESC.loadBoard();
     const sel = document.getElementById("chapterSel");
-    const chapterTitle = document.getElementById("chapterTitle");
-    const hintBox = document.getElementById("hintBox");
+    const titleEl = document.getElementById("chapterTitle");
     const formulaName = document.getElementById("formulaName");
-
+    const hintBox = document.getElementById("hintBox");
     const outCode = document.getElementById("outCode");
     const outToken = document.getElementById("outToken");
+    const calcCard=document.getElementById("calcCard");
+    const finalCard=document.getElementById("finalCard");
+    const finalCode=document.getElementById("finalCode");
+    const finalToken=document.getElementById("finalToken");
 
-    const inA = document.getElementById("inA");
-    const inB = document.getElementById("inB");
-    const inC = document.getElementById("inC");
-    const inD = document.getElementById("inD");
-
-    const calcCard = document.getElementById("calcCard");
-    const finalCard = document.getElementById("finalCard");
-    const finalCode = document.getElementById("finalCode");
-    const finalToken = document.getElementById("finalToken");
-
-    function resetCalcUI(){
-      inA.value = ""; inB.value = ""; inC.value = ""; inD.value = "";
-      outCode.textContent = "—";
-      outToken.textContent = "—";
-    }
-
-    function chapterHint(ch){
-      if(ch === 4) return "Kapitel 4: Toleranz aktiv (A 12–20, B 20–23, C 8–10, D 1–3).";
-      return "";
-    }
-
-    // Populate chapters
     const ids = Object.keys(ESC.CHAPTERS).map(n=>parseInt(n,10)).sort((a,b)=>a-b);
-    ids.forEach(id=>{
+    for(const id of ids){
       const opt=document.createElement("option");
       opt.value=String(id);
       opt.textContent = id + " – " + ESC.CHAPTERS[id].title;
       sel.appendChild(opt);
-    });
+    }
+    sel.value = String(st.chapter || 1);
+
+    function chapterHint(ch){
+      if(ch===4) return "Toleranz: A 12–20, B 20–23, C 8–10, D ist 1/2/3.";
+      return "";
+    }
 
     function render(){
       const ch = parseInt(sel.value,10);
       const info = ESC.CHAPTERS[ch];
-
-      chapterTitle.textContent = info?.title || ("Kapitel " + ch);
+      titleEl.textContent = info.title || ("Kapitel "+ch);
       hintBox.textContent = chapterHint(ch);
-      formulaName.textContent = info?.formulaName || "—";
+      formulaName.textContent = info.formulaName || "—";
 
-      if(ch === 16){
-        calcCard.hidden = true;
-        finalCard.hidden = false;
+      if(ch===16){
+        calcCard.hidden=true;
+        finalCard.hidden=false;
         finalCode.textContent = String(info.finalCode || 2412);
         finalToken.textContent = ESC.makeToken(16, info.finalCode || 2412);
       } else {
-        calcCard.hidden = false;
-        finalCard.hidden = true;
+        calcCard.hidden=false;
+        finalCard.hidden=true;
       }
     }
-
-    // Default: start at chapter 1
-    sel.value = "1";
-    render();
-    resetCalcUI();
-
-    // STRICT: whenever chapter changes, wipe inputs + output
-    sel.addEventListener("change", ()=>{
-      resetCalcUI();
-      render();
-    });
 
     document.getElementById("btnCalc").addEventListener("click", ()=>{
       const ch = parseInt(sel.value,10);
       const info = ESC.CHAPTERS[ch];
-      if(!info || ch === 16) return;
+      if(!info || ch===16) return;
 
-      // Always recompute fresh (no carry-over)
-      let A = Number(inA.value);
-      let B = Number(inB.value);
-      let C = Number(inC.value);
-      let D = Number(inD.value);
-
-      if(!Number.isFinite(A) || !Number.isFinite(B) || !Number.isFinite(C) || !Number.isFinite(D)){
-        outCode.textContent = "—";
-        outToken.textContent = "—";
-        alert("Bitte A–D vollständig als Zahlen eingeben.");
-        return;
-      }
-
+      let A = Number(document.getElementById("inA").value);
+      let B = Number(document.getElementById("inB").value);
+      let C = Number(document.getElementById("inC").value);
+      let D = Number(document.getElementById("inD").value);
       let vals=[A,B,C,D];
       if(info.normalize) vals = info.normalize(vals);
       [A,B,C,D]=vals;
 
       const code = info.compute(A,B,C,D);
-      outCode.textContent = String(code);
-      outToken.textContent = ESC.makeToken(ch, code);
+      const token = ESC.makeToken(ch, code);
 
+      outCode.textContent = String(code);
+      outToken.textContent = token;
       ESC.fxConfetti(2400);
     });
 
     document.getElementById("btnNext").addEventListener("click", ()=>{
       const ch = parseInt(sel.value,10);
       const info = ESC.CHAPTERS[ch];
-
-      // reset BEFORE switching
-      resetCalcUI();
-
       if(info && info.next && ESC.CHAPTERS[info.next]){
         sel.value = String(info.next);
+        render();
       } else {
-        sel.value = "16";
+        sel.value="16"; render();
       }
-      render();
     });
 
-    document.getElementById("resetBoard").addEventListener("click", ()=>{
-      if(confirm("Board zurücksetzen? (nur Anzeige + Eingaben)")){
-        resetCalcUI();
-        sel.value="1";
-        render();
+    document.getElementById("resetAll").addEventListener("click", ()=>{
+      if(confirm("Board-Reset?")){
+        localStorage.removeItem(ESC.KEY_BOARD);
+        location.reload();
       }
     });
+
+    sel.addEventListener("change", render);
+    render();
   </script>
 </body>
 </html>

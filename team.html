@@ -158,30 +158,73 @@
     }
 
     
+    
     btnCheck.addEventListener("click", ()=>{
+      // kick audio context on first interaction
+      ESC.fxSound && ESC.fxSound("pop");
+
       const raw = (codeIn.value || "").trim();
       const entered = Number(raw);
       if(!raw || !Number.isFinite(entered)){
         show(false,"❌ Bitte eine Zahl eingeben.");
         ESC.fxConfetti(700);
+        ESC.fxSound && ESC.fxSound("bad");
         return;
       }
 
       const expected = ESC.SOLUTIONS[current];
       if(!Number.isFinite(expected)){
         show(false,"❌ Für dieses Kapitel ist kein Code hinterlegt.");
+        ESC.fxSound && ESC.fxSound("bad");
         return;
       }
 
       if(entered !== expected){
         show(false,"❌ Code falsch. Nochmal checken (oder Tipp holen).");
         ESC.fxConfetti(900);
+        ESC.fxSound && ESC.fxSound("bad");
         btnNext.style.display="none";
         return;
       }
 
+      // ✅ correct
+      ESC.fxConfetti(3500);
+      ESC.fxSound && ESC.fxSound("ok");
+
+      // Finale: big WIN screen
+      if(current === 16){
+        ESC.fxSound && ESC.fxSound("win");
+
+        const win = document.createElement("div");
+        win.style.position="fixed";
+        win.style.inset="0";
+        win.style.zIndex="9999";
+        win.style.display="grid";
+        win.style.placeItems="center";
+        win.style.padding="18px";
+        win.style.background="radial-gradient(900px 600px at 50% 20%, rgba(124,243,255,.18), rgba(0,0,0,.88))";
+        win.innerHTML = `
+          <div style="max-width:760px; width:100%; padding:22px; text-align:center;
+                      border:1px solid rgba(255,255,255,.18); border-radius:22px;
+                      background:rgba(0,0,0,.35); box-shadow:0 20px 60px rgba(0,0,0,.55)">
+            <div style="font-size:64px; font-weight:1000; margin-bottom:10px">🏆 GEWONNEN!</div>
+            <div style="font-size:18px; color:rgba(255,255,255,.78); line-height:1.5">
+              Ihr habt den Winter-Escape geknackt! 🎄✨<br>
+              <b>Geht zur Spielleitung</b> und holt euch euren Preis.
+            </div>
+            <button id="winClose" class="btn primary big" style="margin-top:16px">🎁 OK</button>
+          </div>
+        `;
+        document.body.appendChild(win);
+        document.getElementById("winClose").addEventListener("click", ()=> win.remove());
+
+        btnNext.style.display="none";
+        btnCheck.disabled = true;
+        show(true,"✅ Finale gelöst!");
+        return;
+      }
+
       show(true,"✅ Code richtig! Weiter freigeschaltet.");
-      ESC.fxConfetti(2600);
       btnNext.style.display="inline-flex";
     });
 

@@ -1,5 +1,5 @@
 (function(){
-  const VERSION = "v4";
+  const VERSION = "v4_3";
   const KEY_BOARD = "escape_board_state_"+VERSION;
   const KEY_TEAM  = "escape_team_progress_"+VERSION;
 
@@ -98,40 +98,80 @@
   const CHAPTERS = {
     1:{ title:"Kapitel 1 – Briefing: Frostige Mission ❄️", next:2,
       groups:{
-        A:`<b>Zeitplanung</b><br>Treffpunkt ist 08:20. Für Aufbau braucht ihr 25 Minuten und ihr wollt 10 Minuten Puffer.<br><br><b>Aufgabe:</b> Wie viele Minuten <i>vor</i> 08:20 muss begonnen werden?`,
-        B:`<b>Mini-Kahoot (genau lesen)</b><br>Welche Aussage stimmt immer?<br>1) Jede Primzahl ist ungerade.<br>2) Jede gerade Zahl ist durch 2 teilbar.<br>3) Jede Zahl mit 0 am Ende ist eine Primzahl.<br><br><b>Antwort:</b> nur die Optionsnummer`,
-        C:`<b>Alltagsmathe</b><br>Ihr habt 3 Kurzstunden à 40 Minuten am Stück.<br><br><b>Aufgabe:</b> Wie viele Minuten sind das insgesamt?`,
-        D:`<b>Logikfalle</b><br>Schreibe die Zahl 9. Addiere 1. Subtrahiere 1. Multipliziere mit 1.<br><br><b>Ergebnis:</b> Zahl`
+        A:`<b>Round 1 (planning)</b><br>
+Meet-up is <b>08:20</b>. Setup takes <b>25</b> minutes.<br>
+<b>Round 2 (buffer)</b><br>
+Add a safety buffer of <b>10</b> minutes.<br><br>
+<b>Task:</b> How many minutes <i>before</i> 08:20 do you start? (number only)`,
+        B:`<b>Mini Kahoot – read carefully</b><br>
+Which statement is <b>always</b> true? (answer with the number)<br>
+1) Every prime number is odd.<br>
+2) Every even number is divisible by 2.<br>
+3) Every number ending in 0 is prime.<br><br>
+<b>Answer:</b> 1 / 2 / 3`,
+        C:`<b>Round 1</b><br>
+You have <b>3</b> short lessons.<br>
+<b>Round 2</b><br>
+Each short lesson lasts <b>40</b> minutes.<br><br>
+<b>Task:</b> Total minutes?`,
+        D:`<b>Idiot test (don’t overthink)</b><br>
+Start with <b>9</b>.<br>
++1, then −1, then ×1.<br><br>
+<b>Result:</b> number`
       },
       formulaName:"A + (B×11) + (C÷10) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A + (B*11) + (C/10) + (D*7))
     },
     2:{ title:"Kapitel 2 – Klick oder Kopf? 📱🧠", next:3,
       groups:{
-        A:`<b>Medienkompetenz</b><br>„Wenn etwas viele Likes hat, ist es wahr.“<br>1 = wahr • 2 = falsch`,
-        B:`<b>Fake-Details</b><br>Ein Post verspricht „Nur heute 70% Rabatt!“ Unten steht klein: „Gilt nur auf ausgewählte Artikel.“<br><br><b>Aufgabe:</b> Wie viele Wörter hat dieser kleine Satz?`,
-        C:`<b>Datenschutz</b><br>Wähle: 1) Passwort überall gleich ist okay • 2) ist riskant • 3) ist egal<br><br><b>Antwort:</b> Optionsnummer`,
-        D:`<b>Idiotentest</b><br>Wie viele Monate haben 28 Tage?<br><br><b>Antwort:</b> Zahl`
+        A:`<b>Media literacy</b><br>
+Claim: “If something has many likes, it must be true.”<br><br>
+<b>Task:</b> 1 = true • 2 = false`,
+        B:`<b>Who reads the small print?</b><br>
+A post says: “Today only 70% off!”<br>
+In tiny text: <i>“Valid only on selected items.”</i><br><br>
+<b>Task:</b> How many words is that sentence? (number only)`,
+        C:`<b>Password logic</b><br>
+“Using the same password everywhere is …”<br>
+1) okay • 2) risky • 3) irrelevant<br><br>
+<b>Answer:</b> 1 / 2 / 3`,
+        D:`<b>Classic trick question</b><br>
+How many months have <b>28 days</b>? (number)`
       },
       formulaName:"(A×10) + (B×3) + (C×9) + (D×2)",
       compute:(A,B,C,D)=>Math.round((A*10)+(B*3)+(C*9)+(D*2))
     },
     3:{ title:"Kapitel 3 – Physik leicht, Fehler schwer ⚡", next:4,
       groups:{
-        A:`<b>Physik</b><br>Ein Fahrrad fährt 180 m in 12 s.<br><br><b>Aufgabe:</b> Geschwindigkeit in m/s (ganze Zahl).`,
-        B:`<b>Stellenwert-Falle</b><br>Welche Zahl ist am größten?<br>1) 0,9<br>2) 0,10<br>3) 0,099<br><br><b>Antwort:</b> Optionsnummer`,
-        C:`<b>Einheiten</b><br>3 Minuten sind wie viele Sekunden?<br><br><b>Antwort:</b> Zahl`,
-        D:`<b>Mini-Formel</b><br>Wenn etwas doppelt so groß wird und du halbierst es wieder: bleibt es…<br>1) größer • 2) gleich • 3) kleiner<br><br><b>Antwort:</b> Optionsnummer`
+        A:`<b>Physics (speed)</b><br>
+A bike travels <b>180 m</b> in <b>12 s</b>.<br><br>
+<b>Task:</b> v = s / t. Round to a whole number.`,
+        B:`<b>Decimal trap</b><br>
+Which is largest? (answer with the number)<br>
+1) 0.9<br>
+2) 0.10<br>
+3) 0.099`,
+        C:`<b>Stopwatch</b><br>
+Your experiment video lasts <b>3 minutes</b>.<br><br>
+<b>Task:</b> Convert to seconds.`,
+        D:`<b>Logic</b><br>
+Something doubles, then you halve it again.<br>
+1) bigger • 2) same • 3) smaller`
       },
       formulaName:"(A×2) + (B×13) + (C÷30) + (D×9)",
       compute:(A,B,C,D)=>Math.round((A*2)+(B*13)+(C/30)+(D*9))
     },
     4:{ title:"Kapitel 4 – Spanne statt Streit (Toleranz) 🧬", next:5,
       groups:{
-        A:`<b>Schätzung (Toleranz)</b><br>Atemzüge pro Minute in Ruhe.<br><b>Akzeptiert:</b> 12–20`,
-        B:`<b>Schätzung (Toleranz)</b><br>Sauerstoffanteil der Luft in %.<br><b>Akzeptiert:</b> 20–23`,
-        C:`<b>Schätzung (Toleranz)</b><br>Schlafbedarf Teenager in Stunden.<br><b>Akzeptiert:</b> 8–10`,
-        D:`<b>Multiple Choice</b><br>Wie viele Muskeln hat der Mensch ungefähr?<br>1) ~200 • 2) ~400 • 3) ~650<br><b>Antwort:</b> Optionsnummer`
+        A:`<b>Estimate (tolerance)</b><br>
+Breaths per minute at rest.<br><b>Accepted:</b> 12–20`,
+        B:`<b>Estimate (tolerance)</b><br>
+Oxygen in air in percent.<br><b>Accepted:</b> 20–23`,
+        C:`<b>Estimate (tolerance)</b><br>
+Teen sleep need (hours).<br><b>Accepted:</b> 8–10`,
+        D:`<b>Multiple choice</b><br>
+How many muscles does a human have (roughly)?<br>
+1) ~200 • 2) ~400 • 3) ~650`
       },
       formulaName:"A + B + C + (D×10)  (Toleranz aktiv)",
       normalize:(vals)=>{
@@ -146,110 +186,178 @@
     },
     5:{ title:"Kapitel 5 – Kaufen oder Ködern 🛒", next:6,
       groups:{
-        A:`<b>Rabatt</b><br>„Statt 2,99€ nur 2,49€“ – wie viele Cent sind das weniger?`,
-        B:`<b>Influencer (Kategorie statt Schätzen)</b><br>In 15 Minuten Social Media:<br>1) 0–1 Werbung • 2) 2–4 • 3) 5+<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>2 kaufen – 1 gratis</b><br>Du nimmst 6 Riegel. Wie viele bezahlst du?`,
-        D:`<b>Prozent</b><br>20% Rabatt auf 50€ = ? (nur die Rabatt-Eurozahl)`
+        A:`<b>Price psychology</b><br>
+“From €2.99 down to €2.49”.<br><br>
+<b>Task:</b> How many cents do you save?`,
+        B:`<b>Ads (no drama)</b><br>
+In 15 minutes of social media you usually see:<br>
+1) 0–1 ads • 2) 2–4 ads • 3) 5+ ads`,
+        C:`<b>Deal math</b><br>
+You take <b>6</b> bars. Deal: “3 for the price of 2”.<br><br>
+<b>Task:</b> How many do you pay for?`,
+        D:`<b>Percent</b><br>
+20% off €50.<br><br>
+<b>Task:</b> Discount in euros (number only).`
       },
       formulaName:"A + (B×8) + (C×3) + (D×2)",
       compute:(A,B,C,D)=>Math.round(A+(B*8)+(C*3)+(D*2))
     },
     6:{ title:"Kapitel 6 – Sprache & Codes 📝", next:7,
       groups:{
-        A:`<b>Deutsch</b><br>Wie viele Buchstaben hat „Prüfung“? (Umlaute zählen als 1)`,
-        B:`<b>Rechtschreibung</b><br>Welche Schreibweise ist korrekt?<br>1) seit dem • 2) seid dem • 3) seiddem<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Englisch</b><br>„I’m excited“ bedeutet meistens…<br>1) aufgeregt/freue mich • 2) wütend • 3) gelangweilt<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Vokale zählen</b><br>Zähle die Vokale (a,e,i,o,u) in „education“.`
+        A:`<b>German</b><br>
+How many letters are in “Prüfung”? (ü counts as one)`,
+        B:`<b>Spelling</b><br>
+Which is correct?<br>
+1) seit dem • 2) seid dem • 3) seiddem`,
+        C:`<b>English</b><br>
+“I’m excited” usually means…<br>
+1) I’m looking forward / excited • 2) angry • 3) bored`,
+        D:`<b>Vowels</b><br>
+Count a,e,i,o,u in “education”.`
       },
       formulaName:"(A×5) + (B×9) + (C×7) + (D×3)",
       compute:(A,B,C,D)=>Math.round((A*5)+(B*9)+(C*7)+(D*3))
     },
     7:{ title:"Kapitel 7 – Logik & Fallen 🧩", next:8,
       groups:{
-        A:`<b>Reihenfolge!</b><br>Startzahl 14. Addiere 10 und halbiere dann. Ergebnis?`,
-        B:`<b>Geometrie</b><br>Ein Quader hat…<br>1) 4 Flächen • 2) 6 Flächen • 3) 8 Flächen<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Wort zählen</b><br>„WEIHNACHTEN“ hat wie viele Buchstaben? Subtrahiere 5.`,
-        D:`<b>Brüche</b><br>Welcher Bruch ist am größten?<br>1) 3/8 • 2) 4/9 • 3) 5/12<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Order matters</b><br>
+Start: 14.<br>
+1) Add 10.<br>
+2) Then halve it.<br><br>
+<b>Answer:</b> number`,
+        B:`<b>Geometry</b><br>
+A cuboid has…<br>
+1) 4 faces • 2) 6 faces • 3) 8 faces`,
+        C:`<b>Word → number</b><br>
+“WEIHNACHTEN” letters?<br>
+<b>Round 2:</b> subtract 5.`,
+        D:`<b>Fractions</b><br>
+Which is largest?<br>
+1) 3/8 • 2) 4/9 • 3) 5/12`
       },
       formulaName:"A + (B×10) + (C×2) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A+(B*10)+(C*2)+(D*7))
     },
     8:{ title:"Kapitel 8 – Energie im Alltag ⚡", next:9,
       groups:{
-        A:`<b>Zeit</b><br>Wasserkocher läuft 3 Minuten. Wie viele Sekunden?`,
-        B:`<b>Temperatur</b><br>Von −2°C auf 20°C: Temperaturänderung?`,
-        C:`<b>Schaltzeichen</b><br>Kreis mit Kreuz steht für… 1) Batterie 2) Lampe 3) Schalter<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Idiotentest</b><br>Wie viele Monate haben 28 Tage?`
+        A:`<b>Time</b><br>
+Kettle runs 3 minutes. Convert to seconds.`,
+        B:`<b>Temperature</b><br>
+From −2°C to 20°C: change by how many degrees?`,
+        C:`<b>Circuit symbol</b><br>
+Circle with an X is…<br>
+1) battery • 2) lamp • 3) switch`,
+        D:`<b>Trick</b><br>
+How many months have 28 days?`
       },
       formulaName:"(A÷30) + (B×2) + (C×9) + (D×8)",
       compute:(A,B,C,D)=>Math.round((A/30)+(B*2)+(C*9)+(D*8))
     },
     9:{ title:"Kapitel 9 – Alltag & Fair Play 🤝", next:10,
       groups:{
-        A:`<b>Meinungsfreiheit</b><br>Was passt am ehesten?<br>1) alles sagen ohne Folgen • 2) Meinung ja, aber ohne Beleidigung/Drohung • 3) immer Mehrheit übernehmen<br><b>Antwort:</b> 1/2/3`,
-        B:`<b>Online-Streit</b><br>Was hilft am ehesten?<br>1) provozieren • 2) Pause/melden/Beweise sichern • 3) alles posten<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Fair teilen</b><br>18 Kekse auf 5 Personen: wie viele bleiben übrig?`,
-        D:`<b>Bio</b><br>Welche Zelle transportiert Sauerstoff?<br>1) Nervenzelle • 2) rotes Blutkörperchen • 3) Hautzelle<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Free speech vs insult</b><br>
+Best rule:<br>
+1) say anything, no consequences<br>
+2) opinion yes, but no insults/threats<br>
+3) always follow the majority`,
+        B:`<b>Online conflict</b><br>
+Best move:<br>
+1) provoke harder<br>
+2) pause / report / save evidence<br>
+3) post everything publicly`,
+        C:`<b>Sharing</b><br>
+18 cookies shared by 5 people.<br><b>Task:</b> remainder?`,
+        D:`<b>Biology</b><br>
+Oxygen transport is done by…<br>
+1) nerve cell • 2) red blood cell • 3) skin cell`
       },
       formulaName:"(A×6) + (B×6) + (C×5) + (D×7)",
       compute:(A,B,C,D)=>Math.round((A*6)+(B*6)+(C*5)+(D*7))
     },
     10:{ title:"Kapitel 10 – KI & Bullshit-Radar 🛰️", next:11,
       groups:{
-        A:`<b>True/False</b><br>„Ein Screenshot ist immer ein Beweis.“ 1=wahr 2=falsch`,
-        B:`<b>True/False</b><br>„Ein KI-Text kann Fehler enthalten.“ 1=nein 2=ja`,
-        C:`<b>Buchstaben</b><br>Zähle die Buchstaben in „algorithmus“.`,
-        D:`<b>Passwort</b><br>Was ist am stärksten?<br>1) 12345678 • 2) passwort • 3) T7!kZ2#pQ9<br><b>Antwort:</b> 1/2/3`
+        A:`<b>True/False</b><br>
+“A screenshot is always proof.” 1=true 2=false`,
+        B:`<b>True/False</b><br>
+“AI text can contain errors.” 1=no 2=yes`,
+        C:`<b>Count</b><br>
+How many letters in “algorithmus” ?`,
+        D:`<b>Password strength</b><br>
+Strongest password?<br>
+1) 12345678 • 2) password • 3) T7!kZ2#pQ9`
       },
       formulaName:"(A×10) + (B×10) + C + (D×9)",
       compute:(A,B,C,D)=>Math.round((A*10)+(B*10)+C+(D*9))
     },
     11:{ title:"Kapitel 11 – Boss-Quiz I 👑", next:12,
       groups:{
-        A:`<b>Genau lesen</b><br>Notiere 6. Addiere 2. Multipliziere mit 3. Ergebnis?`,
-        B:`<b>Umfang</b><br>Rechteck hat Umfang 30 cm. Eine Seite 8 cm. Andere Seite?`,
-        C:`<b>Physik</b><br>Erwärmen → Teilchen bewegen sich… 1) langsamer 2) gleich 3) schneller<br><b>Antwort:</b> 1/2/3`,
-        D:`<b>Wort</b><br>Wie viele Buchstaben hat „SCHNEE“?`
+        A:`<b>Boss</b><br>
+Write 6. Add 2. Multiply by 3.`,
+        B:`<b>Math</b><br>
+Rectangle perimeter 30 cm. One side 8 cm. Other side?`,
+        C:`<b>Physics</b><br>
+Heating a gas makes particles…<br>
+1) slower 2) same 3) faster`,
+        D:`<b>Word</b><br>
+How many letters in “SCHNEE”?`
       },
       formulaName:"A + (B×2) + (C×11) + (D×4)",
       compute:(A,B,C,D)=>Math.round(A+(B*2)+(C*11)+(D*4))
     },
     12:{ title:"Kapitel 12 – Boss-Quiz II 🧠🔥", next:13,
       groups:{
-        A:`<b>Mathe</b><br>12% von 250 = ? (ganze Zahl)`,
-        B:`<b>Logik</b><br>Wenn heute Dienstag ist: in 10 Tagen ist… 1) Freitag 2) Samstag 3) Sonntag<br><b>Antwort:</b> 1/2/3`,
-        C:`<b>Sprache</b><br>Wie viele Silben hat „Information“? (In-for-ma-ti-on)`,
-        D:`<b>Idiotentest</b><br>Was ist schwerer: 1 kg Federn oder 1 kg Steine?<br>1) Federn 2) Steine 3) gleich<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Percent</b><br>
+12% of 250 (whole number).`,
+        B:`<b>Weekday</b><br>
+If today is Tuesday, in 10 days it is…<br>
+1) Friday 2) Saturday 3) Sunday`,
+        C:`<b>Syllables</b><br>
+How many syllables in “Information”? (in-for-ma-ti-on)`,
+        D:`<b>Trick</b><br>
+Which is heavier: 1 kg feathers or 1 kg stones?<br>
+1) feathers 2) stones 3) same`
       },
       formulaName:"A + (B×15) + (C×6) + (D×9)",
       compute:(A,B,C,D)=>Math.round(A+(B*15)+(C*6)+(D*9))
     },
     13:{ title:"Kapitel 13 – GeWi & Welt 🗺️", next:14,
       groups:{
-        A:`<b>Deutschland</b><br>Wie viele Bundesländer hat Deutschland?`,
-        B:`<b>EU</b><br>Wie viele Sterne hat die EU-Flagge?`,
-        C:`<b>Politik-Basis</b><br>Wie viele Jahre dauert eine Legislaturperiode des Bundestags?`,
-        D:`<b>Geografie</b><br>Welche ist die längste? 1) Rhein 2) Elbe 3) Oder<br><b>Antwort:</b> 1/2/3`
+        A:`<b>Germany</b><br>
+How many federal states (Bundesländer)?`,
+        B:`<b>EU</b><br>
+How many stars on the EU flag?`,
+        C:`<b>Politics</b><br>
+How many years is a Bundestag term?`,
+        D:`<b>Geography</b><br>
+Longest river?<br>1) Rhine 2) Elbe 3) Oder`
       },
       formulaName:"A + (B×3) + (C×7) + (D×11)",
       compute:(A,B,C,D)=>Math.round(A+(B*3)+(C*7)+(D*11))
     },
     14:{ title:"Kapitel 14 – WAT & Geld 🧾", next:15,
       groups:{
-        A:`<b>Fix vs. variabel</b><br>Wähle: 1) Miete ist variabel 2) Miete ist fix 3) egal<br><b>Antwort:</b> 1/2/3`,
-        B:`<b>Mehrwertsteuer</b><br>19% von 100€ sind wie viel €?`,
-        C:`<b>Budget</b><br>Du hast 50€. Du gibst 18€ und 12€ aus. Rest?`,
-        D:`<b>Rechnen</b><br>2,50€ pro Tag für 7 Tage: Gesamt in Cent?`
+        A:`<b>Fixed vs variable</b><br>
+Rent is… 1) variable 2) fixed 3) depends`,
+        B:`<b>VAT</b><br>
+19% of €100 = ?`,
+        C:`<b>Budget</b><br>
+You have €50. Spend €18 and €12. Remaining?`,
+        D:`<b>Cost</b><br>
+€2.50 per day for 7 days. Total in cents?`
       },
       formulaName:"(A×20) + B + (C×4) + (D÷10)",
       compute:(A,B,C,D)=>Math.round((A*20)+B+(C*4)+(D/10))
     },
     15:{ title:"Kapitel 15 – Finale Vorbereitung 🎄", next:16,
       groups:{
-        A:`<b>Wort-Radar</b><br>Wie viele Buchstaben hat „WEIHNACHTSBAUM“?`,
-        B:`<b>Mathe</b><br>Summe der Ziffern von 2025?`,
-        C:`<b>Logik</b><br>Wenn du 3 Kerzen anzündest und 2 wieder auspustest: Wie viele Kerzen brennen?`,
-        D:`<b>Mini-Englisch</b><br>„Snow“ hat wie viele Buchstaben?`
+        A:`<b>Final prep</b><br>
+Letters in “WEIHNACHTSBAUM”?`,
+        B:`<b>Digit sum</b><br>
+Sum of digits of 2025?`,
+        C:`<b>Candles</b><br>
+Light 3 candles, blow out 2. How many still burn?`,
+        D:`<b>English</b><br>
+How many letters in “Snow”?`
       },
       formulaName:"A + (B×9) + (C×12) + (D×7)",
       compute:(A,B,C,D)=>Math.round(A+(B*9)+(C*12)+(D*7))
@@ -265,6 +373,47 @@
     1:132, 2:77, 3:67, 4:76, 5:98, 6:66, 7:58, 8:164,
     9:53, 10:78, 11:95, 12:102, 13:91, 14:314, 15:135, 16:2412
   };
+
+
+  // ===== Tiny sound FX (no files, works offline) =====
+  // Note: browsers may block sound until user interacts once. After first tap/click, it works.
+  let _ac = null;
+  function _ctx(){
+    if(_ac) return _ac;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return null;
+    _ac = new AC();
+    return _ac;
+  }
+  function fxSound(type="ok"){
+    const ac = _ctx();
+    if(!ac) return;
+    if(ac.state === "suspended") ac.resume().catch(()=>{});
+
+    const now = ac.currentTime;
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+
+    const presets = {
+      ok:   [660, 880, 0.10],
+      bad:  [220, 160, 0.14],
+      win:  [523.25, 659.25, 0.12],
+      pop:  [900, 600, 0.08],
+    };
+    const [f1,f2,amp] = presets[type] || presets.ok;
+
+    o.type="triangle";
+    o.frequency.setValueAtTime(f1, now);
+    o.frequency.exponentialRampToValueAtTime(Math.max(40,f2), now+0.14);
+
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(amp, now+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, now+0.20);
+
+    o.connect(g); g.connect(ac.destination);
+    o.start(now);
+    o.stop(now+0.22);
+  }
 
   function loadBoard(){
     try{
@@ -282,5 +431,5 @@
   }
   function saveTeam(n){ localStorage.setItem(KEY_TEAM, String(n)); }
 
-  window.ESC = { VERSION, KEY_BOARD, KEY_TEAM, CHAPTERS, SOLUTIONS, loadBoard, saveBoard, loadTeam, saveTeam, fxConfetti, makeToken };
+  window.ESC = { VERSION, KEY_BOARD, KEY_TEAM, CHAPTERS, SOLUTIONS, loadBoard, saveBoard, loadTeam, saveTeam, fxConfetti, fxSound, makeToken };
 })();
